@@ -2,7 +2,7 @@ import React from 'react'
 
 function NavBar() {
   return (
-    <div className='bg-slate-400 '>
+    <div className='flex justify-between align'>
         NavBar
     </div>
   )
