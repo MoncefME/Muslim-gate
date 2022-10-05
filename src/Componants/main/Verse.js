@@ -1,80 +1,68 @@
 import React, { useEffect, useState } from 'react';
+import { GrFormNextLink, GrFormPreviousLink } from 'react-icons/gr';
+import Button from '../common/Button';
+
+
+// Random Number
+function generateRandomNum() {
+    return Math.floor(Math.random() * 6236)
+}
 
 
 const Verse = () => {
-    const [surah, setSurah] = useState({ surahID: "", ayahID: "", content: "" });
 
-    const [surahID, setSurahID] = useState("2");
-    const [ayahID, setAyahID] = useState("3");
-    const [verseContnet, setVerseContent] = useState("");
-    const [verseContnetEn, setVerseContentEn] = useState("");
+    const [randomVerse, setRandomVerse] = useState({});
+    const [verseId, setVerseId] = useState(generateRandomNum());
+    // useEffect(() => {
+    //     setInterval(() => setVerseId(prev => prev + 1), 3000)
 
-    const options = {
-        method: 'GET',
-        headers: {
+    // }, [])
 
-            'X-RapidAPI-Host': 'al-quran1.p.rapidapi.com'
-        }
-    };
+    useEffect(() => {
+        // Fetching API
+        const arabicApi = `https://api.alquran.cloud/v1/ayah/${verseId}/ar.alafasy`;
+        const englishApi = `http://api.alquran.cloud/v1/ayah/${verseId}/en.asad`;
 
-    const fetchQuran = () => {
-        const randomSurahId = Math.floor(Math.random() * 114); // 0->144
-        setSurahID(randomSurahId);
-        //to know how many verses in the surah
-        fetch('https://raw.githubusercontent.com/semarketir/quranjson/master/source/surah.json')
-            .then(response => response.json())
-            .then(response => {
-                const randomVerse = Math.floor(Math.random() * response[randomSurahId].count);
-                setAyahID(randomVerse);
-            })
+        fetch(arabicApi)
+            .then(blob => blob.json())
             .then(data => {
-                console.log("just before", surahID, ayahID);
-                return fetch(`https://al-quran1.p.rapidapi.com/${surahID}/${ayahID}`, options)
+                setRandomVerse(prev => ({
+                    ...prev, surahID: data.data.surah.name,
+                    surahEnID: data.data.surah.englishName,
+                    inSurahNumber: data.data.numberInSurah
+                }));
+                setRandomVerse(prev => ({ ...prev, arText: data.data.text }))
             })
-            .then(response => response.json())
-            .then(response => {
-                console.log(response.content);
-                setVerseContent(response.content);
-                setVerseContentEn(response.translation_eng);
+        fetch(englishApi)
+            .then(blob => blob.json())
+            .then(data => {
 
+                setRandomVerse(prev => ({ ...prev, enText: data.data.text }))
             })
-            .catch(err => console.error("I couldnt find this "));
 
 
-
-
-        //********************************************** */
-    }
-
-
-    useEffect(() => fetchQuran(), []);
+    }, [verseId])
 
 
     return (
-        <div className='flex flex-col  justify-between items-center flex-1  py-4  w-full h-10' >
-            <div className='flex flex-col py-2 px-8'>
-                <p>
-                    {verseContnet}
-                </p>
-
-                <p>
-                    {verseContnetEn}
-                </p>
-
-            </div>
-            <div>
-                <div>
-                    <ol>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ol>
+        <div className='flex flex-col  justify-start items-center flex-1  py-4  w-full h-10' >
+            <div className='flex flex-col  justify-center w-full text-center py-2 px-8 gap-5'>
+                <div className=' flex flex-col gap-4  p-2 w-full bg-gray-200 rounded-2xl overflow-y-scroll scrollbar-hide max-h-52 '>
+                    <p className='font-quran text-2xl'>
+                        {randomVerse.arText}
+                    </p>
+                    <p className='font-verse text-xl'>
+                        {randomVerse.enText}
+                    </p>
                 </div>
-                <p>
-                    Sourat
-                </p>
-
+                <div className='flex justify-center items-center gap-4'>
+                    <Button text={<GrFormPreviousLink size={25} />} onClick={() => setVerseId(verseId + 1)} />
+                    <div className='font-quran text-xl text-gray-800 font-extrabold'>
+                        <p>{randomVerse.surahID}</p>
+                        <p>{randomVerse.inSurahNumber}</p>
+                    </div>
+                    <Button text={<GrFormNextLink size={25} />} onClick={() => setVerseId(verseId - 1)} />
+                </div>
             </div>
         </div >
     )

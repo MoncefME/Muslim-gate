@@ -5,7 +5,7 @@ const Header = () => {
 
 
     return (
-        <header className='px-8 py-2 flex items-center justify-between w-full'>
+        <header className='px-8 py-2 flex items-center justify-between w-full bg-gradient-to-b from-slate-400 to-slate-300'>
             <div className='flex items-center gap-2'>
                 <p className='text-gray-800 font-medium drop-shadow w-fit'>{new Date().toLocaleDateString()}</p>
                 <Button text={"Quick Links"} />

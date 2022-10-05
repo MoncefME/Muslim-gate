@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        "quran": ["'Amiri Quran'", "serif"]
+        "quran": ["'Amiri Quran'", "serif"],
+        "verse": ["'Cairo'", "sans-serif"]
       }
     },
   },

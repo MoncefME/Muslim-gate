@@ -1,5 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Cairo:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}

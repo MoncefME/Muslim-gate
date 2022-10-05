@@ -1,6 +1,23 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
+// arabicAyah.textContent = `${data.data.text}`
+// suraName.textContent = `${data.data.surah.englishName}`
+// ayahNum.textContent = `${data.data.numberInSurah}`
+// audio.src = data.data.audio
+
+
+
+
+
+{/* <div>
+                <p>{currentWeather.current.condition.text}</p>
+                <p>{currentWeather.current.temp_c}<span>&#8451;</span></p>
+                <img src={currentWeather.current.condition.icon}
+                    width={64} height={64} />
+                <p className='flex-wrap'>{currentWeather.location.country} / {currentWeather.location.name}</p>
+            </div> */}
+
 function OldApp() {
     const fetchQuran = ({ surah, start, end }) => {
         const options = {
@@ -29,8 +46,10 @@ function OldApp() {
             fetch('https://raw.githubusercontent.com/semarketir/quranjson/master/source/surah.json')
                 .then(response => response.json())
                 .then(response => {
-                    //const surat = response.map(surah => {"surah":surah.titleAr);
-                    setSurahList(response);
+                    response.map(surah => {
+                        ({ "index": surah.index, "count": surah.count })
+                    })
+                    console.log(response);
                 })
                 .catch(errr => console.log('something went wrong fetching quran surahs'))
 
