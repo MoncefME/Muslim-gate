@@ -12,7 +12,7 @@ const Verse = () => {
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '8be0ded608msha1e3eed26306a0ep1db7bajsnddda6e14468f',
+
             'X-RapidAPI-Host': 'al-quran1.p.rapidapi.com'
         }
     };
