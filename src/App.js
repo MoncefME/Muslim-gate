@@ -1,13 +1,11 @@
-import './App.css';
-import AppContainer from './Componants/AppBody/AppContainer';
-import Footer from './Componants/Footer';
-import Header from './Componants/Header';
+import { Footer, Header, Main } from "./Componants";
+import { useEffect, useState } from "react";
 
 function App() {
   return (
-    <div className="App flex flex-col justify-center relative h-screen">
+    <div className="h-screen flex flex-col ">
       <Header />
-      <AppContainer />
+      <Main />
       <Footer />
     </div>
   );
